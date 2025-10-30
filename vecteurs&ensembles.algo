@@ -46,3 +46,68 @@ BEGIN
     // Output the final result
     WRITE("Sum of distinct elements: ", sum)
 END
+
+///////////////////////////
+// Problem 2: Dot Product & Orthogonality
+///////////////////////////
+
+/*
+  PROCEDURE: dot_product
+  Calculates the dot product of two real-valued vectors v1 and v2 of size n.
+  The result is stored in the variable ps (passed by reference).
+*/
+PROCEDURE dot_product(v1 : ARRAY OF REAL, v2 : ARRAY OF REAL, n : INTEGER, VAR ps : REAL)
+VAR
+    i : INTEGER
+BEGIN
+    // Initialisation
+
+    ps ← 0  // Initialize dot product result
+
+    // Loop through each component and accumulate the product
+    FOR i ← 0 TO n - 1 DO
+        ps ← ps + v1[i] * v2[i]
+    ENDFOR
+END
+
+
+/*
+  ALGORITHM: CheckOrthogonalVectors
+  Reads multiple pairs of vectors and checks if each pair is orthogonal.
+  Two vectors are orthogonal if their dot product is zero.
+*/
+ALGORITHM CheckOrthogonalVectors
+VAR
+    v1, v2 : ARRAY [0..9] OF REAL  // Vectors to compare
+    ps : REAL                      // Dot product result
+    n, i, j, size : INTEGER        // n = number of vector pairs, size = vector length
+BEGIN
+    // Read the number of vector pairs to process
+    Read n
+
+    // Loop through each pair of vectors
+    FOR i ← 1 TO n DO
+        // Read the size of the current vector pair
+        Read size
+
+        // Read elements of the first vector
+        FOR j ← 0 TO size - 1 DO
+            Read v1[j]
+        ENDFOR
+
+        // Read elements of the second vector
+        FOR j ← 0 TO size - 1 DO
+            Read v2[j]
+        ENDFOR
+
+        // Compute the dot product of v1 and v2
+        dot_product(v1, v2, size, ps)
+
+        // Check if the vectors are orthogonal
+        IF ps = 0 THEN
+            Write("Vector pair ", i, " is orthogonal.")
+        ELSE
+            Write("Vector pair ", i, " is NOT orthogonal.")
+        ENDIF
+    ENDFOR
+END
